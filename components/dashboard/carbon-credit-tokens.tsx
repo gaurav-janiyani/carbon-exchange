@@ -37,8 +37,8 @@ export function CarbonCreditTokens() {
     await new Promise((resolve) => setTimeout(resolve, 1000))
     setTokens((prevTokens) =>
       prevTokens.map((token) =>
-        token.id === tokenId ? { ...token, amount: token.amount - Number.parseInt(transferAmount) } : token,
-      ),
+        token.id === tokenId ? { ...token, amount: token.amount - Number(transferAmount) } : token
+      )
     )
     setTransferAmount("")
     setTransferAddress("")
@@ -74,7 +74,7 @@ export function CarbonCreditTokens() {
                 <CardDescription>Token ID: {token.id}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
                   <span>Amount: {token.amount} tCO2e</span>
                   <span>Expires: {token.expirationDate}</span>
                 </div>
@@ -97,7 +97,8 @@ export function CarbonCreditTokens() {
                   />
                   <Button
                     onClick={() => handleTransfer(token.id)}
-                    disabled={!transferAmount || !transferAddress || Number.parseInt(transferAmount) > token.amount}
+                    disabled={!transferAmount || !transferAddress || Number(transferAmount) > token.amount}
+                    className="w-full sm:w-auto"
                   >
                     Transfer
                   </Button>
